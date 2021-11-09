@@ -17,26 +17,24 @@ class Main {
     records();
   } // END of main method
 
-    public static void records () 
+  public static attraction create(String name, int open, int close, boolean holiday)
+  {
+    attraction record = new attraction(); 
+    record.name = name;
+    record.openingTime = open;
+    record.closingTime = close;
+    record.bankholiday = holiday;
+
+    return record;
+
+  }
+
+  public static void records () 
   {
     //setting the record attractions
-    attraction eden = new attraction(); 
-    eden.name = "The Eden Project";
-    eden.openingTime = 9;
-    eden.closingTime = 18;
-    eden.bankholiday = true;
-
-    attraction tate = new attraction();
-    tate.name = "Tate Modern";
-    tate.openingTime = 10;
-    tate.closingTime = 19;
-    tate.bankholiday = false;
-
-    attraction zoo = new attraction();
-    zoo.name = "London zoo";
-    zoo.openingTime = 10;
-    zoo.closingTime = 19;
-    zoo.bankholiday = true;
+    attraction eden = create("The Eden project", 9, 18, true);
+    attraction tate = create("Tate Modern", 10, 19, false);
+    attraction zoo = create("London Zoo", 10, 19, true);
 
     //function asks and returns the amount of attractions the user wants to know about
     int quant = askQuantity();
@@ -44,8 +42,8 @@ class Main {
     // gap to see the next question more easily
     System.out.println(""); 
 
-    //loop function takes all arguments to loop through asking questions
-    loop(quant, eden, tate, zoo);
+    //getInfoLoop function takes all arguments to getInfoLoop through asking questions
+    getInfoLoop(quant, eden, tate, zoo);
 
     return;
   }// END of records method
@@ -53,31 +51,40 @@ class Main {
   //asks questions about attractions and returns input
   public static int askQuantity ()
   {
-    int quant;
-    try
+    int quant = 0;
+    boolean isNumber;
+    Scanner scanner = new Scanner(System.in);
+
+    do
     {
-      Scanner scanner = new Scanner(System.in);
       System.out.print("How many attractions do you need to know about? ");
-      quant = scanner.nextInt();
-    }
-    catch (Exception e)
-    {
-      System.out.println("Wrong input type; integer required... \n");
-      quant = askQuantity();
-    }
+      if (scanner.hasNextInt())
+      {
+        quant = scanner.nextInt();
+        isNumber = true;
+      }
+      else
+      {
+        System.out.println("Wrong input: integer required!\n");
+        isNumber = false;
+        scanner.next();
+      }
+
+    } while (!(isNumber));
+
     return quant;
   }//END of askQuantity
 
-  //makes a for loop which lasts the amount of times of quant
-  public static void loop (int quant, attraction a1, attraction a2, attraction a3) {
+  //makes a for getInfoLoop which lasts the amount of times of quant
+  public static void getInfoLoop (int quant, attraction a1, attraction a2, attraction a3) {
 
     for (int i=1; i<= quant; i++)
     {
-      //functions which gets looped through
+      //functions which gets getInfoLooped through
       getInfo(i, a1, a2, a3);
     }
 
-  }//END of loop
+  }//END of getInfoLoop
 
   //get info gets the users input and returns info about the attraction
   public static void getInfo (int i, attraction a1, attraction a2, attraction a3)
